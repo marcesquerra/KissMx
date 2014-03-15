@@ -819,5 +819,3 @@ object KissMx
 		}
 	}
 }
-
-case class Cosa(a: Int , b: String = "gallo")
