@@ -2,13 +2,13 @@ import SonatypeKeys._
 
 sonatypeSettings
 
+releaseSettings
+
 name := "KissMx"
 
 organization := "com.bryghts.kissmx"
 
 profileName  := "com.bryghts"
-
-version      := "0.0.1"
 
 scalaVersion := "2.10.3"
 
