@@ -1,4 +1,8 @@
 import SonatypeKeys._
+import sbtrelease._
+import ReleaseStateTransformations._
+import ReleaseKeys._
+import xerial.sbt.Sonatype.SonatypeKeys
 
 sonatypeSettings
 
@@ -47,3 +51,17 @@ pomExtra := (
   </developers>
 )
 
+releaseProcess := Seq[ReleaseStep](
+	checkSnapshotDependencies,                    // : ReleaseStep
+	inquireVersions,                              // : ReleaseStep
+	runClean,                                     // : ReleaseStep
+	runTest,                                      // : ReleaseStep
+	setReleaseVersion,                            // : ReleaseStep
+	commitReleaseVersion,                         // : ReleaseStep, performs the initial git checks
+	tagRelease,                                   // : ReleaseStep
+	releaseTask(PgpKeys.publishSigned),           // : ReleaseStep, checks whether `publishTo` is properly set up
+	releaseTask(SonatypeKeys.sonatypeReleaseAll), // : ReleaseStep, checks whether `publishTo` is properly set up
+	setNextVersion,                               // : ReleaseStep
+	commitNextVersion,                            // : ReleaseStep
+	pushChanges                                   // : ReleaseStep, also checks that an upstream branch is properly configured
+)
