@@ -59,8 +59,16 @@ releaseProcess := Seq[ReleaseStep](
 	setReleaseVersion,                            // : ReleaseStep
 	commitReleaseVersion,                         // : ReleaseStep, performs the initial git checks
 	tagRelease,                                   // : ReleaseStep
-	releaseTask(PgpKeys.publishSigned),           // : ReleaseStep, checks whether `publishTo` is properly set up
-	releaseTask(SonatypeKeys.sonatypeReleaseAll), // : ReleaseStep, checks whether `publishTo` is properly set up
+	ReleaseStep(
+		action = { state =>
+			val extracted = Project extract state
+			extracted.runAggregated(PgpKeys.publishSigned in Global in extracted.get(thisProjectRef), state)
+		}
+	),           // : ReleaseStep, checks whether `publishTo` is properly set up
+	ReleaseStep{ state =>
+		val extracted = Project extract state
+		extracted.runAggregated(sonatypeReleaseAll in Global in extracted.get(thisProjectRef), state)
+	}, // : ReleaseStep, checks whether `publishTo` is properly set up
 	setNextVersion,                               // : ReleaseStep
 	commitNextVersion,                            // : ReleaseStep
 	pushChanges                                   // : ReleaseStep, also checks that an upstream branch is properly configured
