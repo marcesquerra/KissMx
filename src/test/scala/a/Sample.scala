@@ -16,5 +16,5 @@ object Sample extends App{
     case _ => println("Noooo!!!!")
   }
 
-	val tmp:MultiplexingImplementation[S] = multiplexingImplementationFor[S]
+//	val tmp:MultiplexingImplementation[S] = multiplexingImplementationFor[S]
 }

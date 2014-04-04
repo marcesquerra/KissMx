@@ -4,6 +4,8 @@ import ReleaseStateTransformations._
 import ReleaseKeys._
 import xerial.sbt.Sonatype.SonatypeKeys
 
+val commonScalaVersion = "2.10.4"
+
 sonatypeSettings
 
 releaseSettings
@@ -14,9 +16,15 @@ organization := "com.bryghts.kissmx"
 
 profileName  := "com.bryghts"
 
-scalaVersion := "2.10.3"
+scalaVersion := commonScalaVersion
 
-libraryDependencies += "org.scala-lang" % "scala-reflect" % "2.10.2"
+crossScalaVersions := Seq(
+	"2.10.1",
+	"2.10.2",
+	"2.10.3",
+	"2.10.4")
+
+libraryDependencies += "org.scala-lang" % "scala-reflect" % commonScalaVersion
 
 libraryDependencies += "org.specs2" %% "specs2" % "2.2.2" % "test"
 
